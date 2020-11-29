@@ -57,5 +57,10 @@
         {
             return value;
         }
+
+        public override string ToString()
+        {
+            return "TOKEN-TYPE: " + type.ToString("g") + "VALUE: " + value;
+        }
     }
 }

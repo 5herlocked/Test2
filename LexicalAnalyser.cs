@@ -24,6 +24,10 @@ namespace Test2CSharp
                     Environment.Exit(-1);
                     break;
             }
+
+            foreach (Token t in tokens) {
+                Console.WriteLine(t);
+            }
         }
 
         private static void Tokenise(String filePath, ref List<Token> tokens)
@@ -53,7 +57,7 @@ namespace Test2CSharp
 
             for(int i = 0; i < line.Length; i++)
             {
-                if (lineArray[i] == '$')
+                if (lineArray[i] == '$' || lineArray[i] == '%' || lineArray[i] == '@')
                 {
                     // Perl Identifier
                     tokensInLine.Add(GetIdentifier(lineArray, i));
@@ -91,6 +95,10 @@ namespace Test2CSharp
                 if (nextChar == Char.MinValue)
                 {
                     tokensInLine.Add(errorToken);
+                    goto EndOfLoop;
+                }
+
+                if (nextChar == ';') {
                     goto EndOfLoop;
                 }
 
@@ -187,7 +195,7 @@ namespace Test2CSharp
             int currentIndex = index;
             TokenType tokenType = TokenType.IDENTIFIER;
 
-            while (!IsWhiteSpace(line[index]))
+            while (!IsWhiteSpace(line[currentIndex]))
             {
                 newIdentifier += line[currentIndex];
                 currentIndex += 1;
